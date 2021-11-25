@@ -14,6 +14,7 @@ class UMotionControllerComponent;
 class UAnimMontage;
 class USoundBase;
 
+
 UCLASS(config=Game)
 class AFirstPersonCharacter : public ACharacter
 {
@@ -43,6 +44,8 @@ class AFirstPersonCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UMotionControllerComponent* L_MotionController;
 
+	
+
 public:
 	AFirstPersonCharacter();
 
@@ -69,14 +72,12 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<class AGun> GunBlueprint;
 
+
 private:
 	AGun* Gun;
 
 protected:
 	
-	/** Fires a projectile. */
-	void OnFire();
-
 	/** Resets HMD orientation and position in VR. */
 	void OnResetVR();
 

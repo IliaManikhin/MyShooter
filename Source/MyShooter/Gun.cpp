@@ -4,6 +4,7 @@
 #include "Gun.h"
 #include "MyShooterProjectile.h"
 #include "Animation/AnimInstance.h"
+#include "Components/InputComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
@@ -47,10 +48,10 @@ void AGun::Tick(float DeltaTime)
 void AGun::OnFire()
 {
 	// try and fire a projectile
-	if (ProjectileClass != nullptr)
+	if (ensure(ProjectileClass != nullptr))
 	{
 		UWorld* const World = GetWorld();
-		if (World != nullptr)
+		if (ensure(World != nullptr))
 		{
 			
 				const FRotator SpawnRotation = FP_MuzzleLocation->GetComponentRotation();
