@@ -4,6 +4,7 @@
 #include "Tile.h"
 #include "DrawDebugHelpers.h"
 
+
 // Sets default values
 ATile::ATile()
 {
@@ -27,7 +28,6 @@ void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn,
 			PlaceActor(ToSpawn, SpawnPoint, RandomRotation, RandomScale);
 		}
 
-		//UE_LOG(LogTemp, Warning, TEXT("Spawn point: %s"), *SpawnPoint.ToCompactString())
 	}
 
 }
@@ -66,7 +66,6 @@ void ATile::PlaceActor(TSubclassOf<AActor> ToSpawn, FVector SpawnPoint, float Ro
 void ATile::BeginPlay()
 {
 	Super::BeginPlay();
-	
 	
 }
 
