@@ -17,6 +17,20 @@ void ATile::SetPool(UActorPool* InPool)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Setting pool %s"), *(InPool->GetName()))
 	Pool = InPool;
+
+	PositionNavMeshBoundsVolume(); 
+}
+
+void ATile::PositionNavMeshBoundsVolume()
+{
+	 NavMeshBoundsVolume = Pool->Checkout();
+	if (NavMeshBoundsVolume == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("NavMeshBoundsVolume set as nullptr in ATile"))
+		return;
+	}
+
+	NavMeshBoundsVolume->SetActorLocation(GetActorLocation());
 }
 
 
@@ -75,6 +89,11 @@ void ATile::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void ATile::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Pool->Return(NavMeshBoundsVolume);
 }
 
 // Called every frame
