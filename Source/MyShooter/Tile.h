@@ -23,6 +23,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Pool")
 	void SetPool(UActorPool* InPool);
 
+	UPROPERTY(EditDefaultsOnly, Category = "Spawning")
+	FVector MinExtent;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Spawning")
+	FVector MaxExtent;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
