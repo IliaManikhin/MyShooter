@@ -30,6 +30,10 @@ public:
 	FVector MaxExtent;
 
 protected:
+
+	UPROPERTY(EditDefaultsOnly, Category = "Navigation")
+	FVector NavigationBoundsOffset;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
