@@ -51,6 +51,27 @@ void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn,
 
 }
 
+void ATile::PlaceAIPawns(TSubclassOf<APawn> ToSpawn, int MinSpawn, int MaxSpawn, float Radius)
+{
+	TArray<FSpawnPosition>SpawnPositions = RandomSpawnPositions(MinSpawn, MaxSpawn, Radius, 1, 1);
+	for (FSpawnPosition SpawnPosition : SpawnPositions)
+	{
+		PlaceAI(ToSpawn, SpawnPosition);
+	}
+} 
+
+void ATile::PlaceAI(TSubclassOf<APawn> ToSpawn, const FSpawnPosition& SpawnPosition)
+{
+	APawn* SpawnedAI = GetWorld()->SpawnActor<APawn>(ToSpawn);
+	SpawnedAI->SetActorRelativeLocation(SpawnPosition.Location);
+	SpawnedAI->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
+	SpawnedAI->SetActorRotation(FRotator(0, SpawnPosition.Rotation, 0));
+	SpawnedAI->SpawnDefaultController();
+	SpawnedAI->Tags.Add(FName("Enemy"));
+}
+
+
+
 TArray<FSpawnPosition> ATile::RandomSpawnPositions(int MinSpawn, int MaxSpawn, float Radius, float MinScale, float MaxScale)
 {
 	TArray<FSpawnPosition> SpawnPositions;
@@ -58,7 +79,7 @@ TArray<FSpawnPosition> ATile::RandomSpawnPositions(int MinSpawn, int MaxSpawn, f
 
 	for (size_t i = 0; i < NumberToSpawn; i++)
 	{
-		//FVector SpawnPoint;
+		
 		FSpawnPosition SpawnPosition;
 		SpawnPosition.Scale = FMath::RandRange(MinScale, MaxScale);
 		bool found = FindEmptyLocation(SpawnPosition.Location, Radius * SpawnPosition.Scale);
@@ -72,9 +93,6 @@ TArray<FSpawnPosition> ATile::RandomSpawnPositions(int MinSpawn, int MaxSpawn, f
 	}
 	return SpawnPositions;
 }
-
-
-
 
 bool ATile::FindEmptyLocation(FVector& OutLocation, float Radius)
 {
